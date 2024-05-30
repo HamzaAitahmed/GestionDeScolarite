@@ -19,4 +19,10 @@ public class GroupService {
 
     public List<Groups> getGroups() { return groupsRepository.findAll();}
 
+
+    public Groups DeleteGroups(int id){
+        Groups group = groupsRepository.findById(id);
+        groupsRepository.deleteById(id);
+        return group;
+    }
 }

@@ -36,18 +36,14 @@ public class GroupsRest {
 
 
     @GetMapping(path="/getAllGroups")
-    public List<Groups> getAllGroups()
-    {
-        System.out.println("getAllUser ");
-        return groupService.getGroups();
-    }
+    public List<Groups> getAllGroups() { return groupService.getGroups(); }
 
-    @DeleteMapping("/DeleteUser/{id}") // Methode Delete Doesn't Work
+    @DeleteMapping("/DeleteGroup/{id}") // Methode Delete Doesn't Work
 //    @RequestMapping(value="/DeleteUser/{id}", method={RequestMethod.DELETE, RequestMethod.GET})
-    public ResponseEntity<User> DeleteUser(@PathVariable int id)
+    public ResponseEntity<Groups> DeleteGroup(@PathVariable int id)
     {
-        User deletedUser = userService.DeleteUser(id);
-        return new ResponseEntity<User>(deletedUser, HttpStatus.OK);
+        Groups deletedGroups = groupService.DeleteGroups(id);
+        return new ResponseEntity<Groups>(deletedGroups, HttpStatus.OK);
     }
 
 

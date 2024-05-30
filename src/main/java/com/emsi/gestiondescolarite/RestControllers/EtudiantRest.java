@@ -33,11 +33,7 @@ public class EtudiantRest {
 
 
     @GetMapping(path="/getAllEtudiant")
-    public List<Etudiant> getAllEtudiant()
-    {
-        System.out.println("getAllUser ");
-        return etudiantService.getEtudiant();
-    }
+    public List<Etudiant> getAllEtudiant() { return etudiantService.getEtudiant(); }
 
 
     @DeleteMapping("/DeleteEtudiant/{id}") // Methode Delete Doesn't Work

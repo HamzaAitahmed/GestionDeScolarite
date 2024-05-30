@@ -21,7 +21,6 @@ public class EtudiantService {
         Etudiant etudiant = etudiantRepository.findEtudiantsById(id);
         etudiant.setGroups(null);
         etudiantRepository.deleteById(id);
-        System.out.println(etudiant);
         return etudiant;
     }
 }

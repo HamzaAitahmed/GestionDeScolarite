@@ -52,7 +52,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests()
-                .requestMatchers("/login**","/getAllUser**","/DeleteUser/{id}**","/home**","/register**","/logout**","/bootstrap/**","/css/**","/fonts/**","/images/**","/scss/**").permitAll()
+                .requestMatchers("/login**","/RestControllers/**","/getAllEtudiant**","/getAllGroups**","/getAllCours**","/getAllUser**","/DeleteUser/{id}**","/home**","/register**","/logout**","/bootstrap/**","/css/**","/fonts/**","/images/**","/scss/**").permitAll()
                 .anyRequest().authenticated();
 
         http

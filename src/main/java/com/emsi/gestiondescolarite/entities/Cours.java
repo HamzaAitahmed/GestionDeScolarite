@@ -17,6 +17,7 @@ public class Cours {
     private String description;
 
     @ManyToOne
+    @JsonBackReference
     private Groups groups;
 
 }

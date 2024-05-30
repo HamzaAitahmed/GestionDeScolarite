@@ -1,9 +1,11 @@
 package com.emsi.gestiondescolarite.RestControllers;
 
 import com.emsi.gestiondescolarite.dao.UserRepository;
+import com.emsi.gestiondescolarite.entities.Cours;
 import com.emsi.gestiondescolarite.entities.Etudiant;
 import com.emsi.gestiondescolarite.entities.Groups;
 import com.emsi.gestiondescolarite.entities.User;
+import com.emsi.gestiondescolarite.services.CoursService;
 import com.emsi.gestiondescolarite.services.EtudiantService;
 import com.emsi.gestiondescolarite.services.GroupService;
 import com.emsi.gestiondescolarite.services.UserService;
@@ -23,6 +25,7 @@ public class CoursRest {
     @Autowired UserRepository userRepository;
     @Autowired private UserService userService;
     @Autowired private GroupService groupService;
+    @Autowired private CoursService coursService;
     @Autowired private EtudiantService etudiantService;
 
 //    @GetMapping("/")
@@ -35,18 +38,14 @@ public class CoursRest {
 //    }
 
 
-    @GetMapping(path="/getAllGroups")
-    public List<Groups> getAllGroups()
-    {
-        System.out.println("getAllUser ");
-        return groupService.getGroups();
-    }
+    @GetMapping(path="/getAllCours")
+    public List<Cours> getAllCours() { return coursService.getCours(); }
 
-    @DeleteMapping("/DeleteUser/{id}")
-    public ResponseEntity<User> DeleteUser(@PathVariable int id)
+    @DeleteMapping("/DeleteCours/{id}")
+    public ResponseEntity<Cours> DeleteCours(@PathVariable int id)
     {
-        User deletedUser = userService.DeleteUser(id);
-        return new ResponseEntity<User>(deletedUser, HttpStatus.OK);
+        Cours deletedCours = coursService.DeleteCours(id);
+        return new ResponseEntity<Cours>(deletedCours, HttpStatus.OK);
     }
 
 }
