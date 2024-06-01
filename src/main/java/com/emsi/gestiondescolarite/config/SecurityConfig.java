@@ -5,9 +5,12 @@ package com.emsi.gestiondescolarite.config;
 import com.emsi.gestiondescolarite.services.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Role;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -47,17 +50,29 @@ public class SecurityConfig {
 //    }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, HttpSecurity httpSecurity) throws Exception {
+
+//        http.authorizeRequests((authorize) -> authorize
+//                .requestMatchers("/User/**").hasRole("USER")
+//                .requestMatchers("/Admin/**").hasRole("ADMIN"));
 
         http
-                .authorizeHttpRequests()
-                .requestMatchers("/login**","/RestControllers/**","/getAllEtudiant**","/getAllGroups**","/getAllCours**","/getAllUser**","/DeleteUser/{id}**","/home**","/register**","/logout**","/bootstrap/**","/css/**","/fonts/**","/images/**","/scss/**").permitAll()
-                .anyRequest().authenticated();
+                .authorizeRequests(ar -> ar.requestMatchers("/home","/Auth/**","/Rest/**","/bootstrap/**","/css/**","/fonts/**","/images/**","/scss/**").permitAll().anyRequest().authenticated());
+//                .requestMatchers("/home/**","/login/**","/register/**","/logout/**","/bootstrap/**","/css/**","/fonts/**","/images/**","/scss/**").permitAll()
+//                .anyRequest().authenticated();
+
+//        http.authorizeRequests((authorize) -> authorize
+//                .requestMatchers("/Admin/**").hasRole("ADMIN")
+////                .requestMatchers("/User/**").hasRole("USER")
+//                .anyRequest().authenticated()
+//        );
 
         http
-                .formLogin()
-                .loginPage("/home"); // methode post doesnt work ???
+                .formLogin(ar -> ar.loginPage("/home"));// methode post doesnt work ???
+//                .formLogin()// methode post doesnt work ???
+//                .loginPage("/home");
+
+        http.csrf(cs -> cs.disable());
 
         return http.build();
     }

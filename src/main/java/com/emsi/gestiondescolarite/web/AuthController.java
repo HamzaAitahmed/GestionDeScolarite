@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @SessionAttributes({"connectedUser"})
-@RequestMapping("")
+@RequestMapping("Auth")
 public class AuthController {
     private final UserService userService;
 
@@ -39,14 +39,13 @@ public class AuthController {
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public String index(){ return "redirect:/indexEtudiant"; }
 
-    @RequestMapping(value = "/home",method = RequestMethod.GET)
-    public String home(HttpServletRequest request, HttpServletResponse response, Model model){ return "Auth/home"; }
+
 
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String login(){ return "Auth/Login";    }
 
 
-    @RequestMapping(value = "/logout",method = RequestMethod.GET)
+    @RequestMapping(value = "/Signout",method = RequestMethod.GET)
     public String logout(HttpServletRequest request){
 
         HttpSession session = request.getSession();
@@ -54,7 +53,7 @@ public class AuthController {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(null);
 
-        return "redirect:/login";
+        return "redirect:/Auth/login";
     }
 
 
@@ -74,7 +73,7 @@ public class AuthController {
 
         User OldUser = userRepository.findUserByEmail(email);
         if(OldUser == null){
-            return "redirect:/login?error";
+            return "redirect:/Auth/login?error";
         }
 
         try {
@@ -87,10 +86,10 @@ public class AuthController {
 
             session.setAttribute("connectedUser",OldUser);
 
-            return "redirect:/";
+            return "redirect:/Auth/";
 
         } catch (Exception e){
-            return "redirect:/login?error";
+            return "redirect:/Auth/login?error";
         }
 
     }
@@ -105,12 +104,12 @@ public class AuthController {
             User userTest = userRepository.findUserByEmail(user.getEmail());
 
             if(userTest != null){
-                return "redirect:/register?error";
+                return "redirect:/Auth/register?error";
             }
 
             User newUser = userService.createUser(user);
             if(newUser == null){
-                return "redirect:/register?error";
+                return "redirect:/Auth/register?error";
             }
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
             SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -118,10 +117,10 @@ public class AuthController {
             HttpSession session = request.getSession(true);
             session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,securityContext);
 
-            return "redirect:/login";
+            return "redirect:/Auth/login";
 
         } catch (Exception e){
-            return "redirect:/register?error";
+            return "redirect:/Auth/register?error";
         }
 
     }

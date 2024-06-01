@@ -39,7 +39,7 @@
                                  <p>Enter your password to access the admin.</p>
                                   <p th:if="${param.error}" class="error"  th:text="${message}" ></p>
                                   <input  type="hidden" name="number" th:value="${user.getId()}">
-                                  <form th:action="@{/logout}" method="Post">
+                                  <form th:action="@{/Auth/SignOut}" method="Post">
                                     <div class="row">
                                        <div class="col-lg-12">
                                           <div class="floating-label form-group">
